@@ -1,0 +1,110 @@
+getgenv().functions = {
+
+    getRoot = function(plr)
+        plr = plr or game.Players.LocalPlayer
+        local sucess, root = pcall(function()
+            return plr.Character.HumanoidRootPart or false
+        end)
+        return root
+    end,
+
+    getHumanoid = function(plr)
+        plr = plr or game.Players.LocalPlayer
+        local sucess, humanoid = pcall(function()
+            return plr.Character.Humanoid or false
+        end)
+        return humanoid
+    end,
+
+    getCharacter = function(plr)
+        plr = plr or game.Players.LocalPlayer
+        local sucess, char = pcall(function()
+            return plr.Character or false
+        end)
+        return char
+    end,
+
+    FindPlayer = function(playerName)
+        local target = false 
+
+        for i,v in pairs(game.Players:GetChildren()) do
+            if v.Name:lower():match(playerName:lower()) or v.DisplayName:lower():match(playerName:lower()) then
+                target = v
+            end
+        end
+
+        return target
+    end,
+
+    getNearest = function(teamcheck)
+        local nearest = 9e9
+        local target
+
+        for i,v in pairs(game.Players:GetChildren()) do
+
+            if game.Players.LocalPlayer ~= v then
+
+                pcall(function()
+            
+                    if ((teamcheck == true and v.TeamColor ~= game.Players.LocalPlayer.TeamColor) or teamcheck == false) then
+
+                        local mag = (v.Character.Head.Position - game.Players.LocalPlayer.Character.Head.Position).Magnitude
+
+                        if mag < nearest then
+                            nearest = mag
+                            target = v 
+                        end
+                    end
+    
+                end)
+
+            end
+
+        end
+
+        return target 
+    end,
+    
+    getNearestToMouse = function(teamcheck)
+        local nearest = 9e9
+        local target
+
+        for i,v in pairs(game.Players:GetChildren()) do
+
+            if v ~= game.Players.LocalPlayer then
+
+                pcall(function()
+            
+                    if ((teamcheck == true and v.TeamColor ~= game.Players.LocalPlayer.TeamColor) or teamcheck == false) then
+
+                        local vector, onscreen = workspace.CurrentCamera:worldToViewportPoint(v.Character.Head.Position)
+
+                        if onscreen then
+
+                            local mag = (game:GetService("UserInputService"):GetMouseLocation() - Vector3.new(vector.X, vector.Y)).Magnitude
+
+                            if mag < nearest then
+
+                                nearest = mag
+                                target = v
+
+                            end
+
+                        end
+
+                    end
+    
+                end)
+
+            end
+
+        end
+
+        
+
+        return target
+    end,
+
+    
+
+}
