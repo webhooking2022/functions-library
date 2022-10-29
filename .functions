@@ -105,6 +105,29 @@ getgenv().functions = {
         return target
     end,
 
-    
+    sendWebHook = function(tab, webhook)
+        local req = (syn and syn.request) or request or http_request 
+
+        req(
+            {
+                Url = webhook;
+                Method = "POST";
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                };
+                Body = game:GetService("HttpService"):JSONEncode(tab)
+            }
+        )
+    end,
+
+    sendNotification = function(title, text, duration)
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = title;
+            Text = text;
+            Duration = duration;
+        })
+    end,
+
+
 
 }
