@@ -120,12 +120,120 @@ getgenv().functions = {
         )
     end,
 
-    sendNotification = function(title, text, duration)
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = title;
-            Text = text;
-            Duration = duration;
-        })
+    sendNotification = function(titlee, text, duration)
+
+
+        if game.CoreGui:FindFirstChild("Notification") then
+            for i,v in pairs(game.CoreGui:GetChildren()) do
+                if v.Name == "Notification" and v:FindFirstChild("Frame") then
+                    v.Frame:TweenPosition(UDim2.new(0.344000012, 0, -1.0219999999, 0), "InOut", "Quart", 1, true)
+                end
+            end
+        end
+        local Notification = Instance.new("ScreenGui")
+        local Frame = Instance.new("Frame")
+        local UICorner = Instance.new("UICorner")
+        local DropShadow = Instance.new("Frame")
+        local UICorner_2 = Instance.new("UICorner")
+        local DropShadow_2 = Instance.new("Frame")
+        local UICorner_3 = Instance.new("UICorner")
+        local DropShadow_3 = Instance.new("Frame")
+        local UICorner_4 = Instance.new("UICorner")
+        local DropShadow_4 = Instance.new("Frame")
+        local UICorner_5 = Instance.new("UICorner")
+        local title = Instance.new("TextLabel")
+        local Mesage = Instance.new("TextLabel")
+        
+        
+        Notification.Name = "Notification"
+        Notification.Parent = game.CoreGui
+        
+        Frame.Parent = Notification
+        Frame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+        Frame.BorderSizePixel = 0
+        Frame.Position = UDim2.new(0.344000012, 0, -1.0219999999, 0)
+        Frame.Size = UDim2.new(0.311650485, 0, 0.1640625, 0)
+        Frame.ZIndex = 5
+        
+        spawn(function()
+            Frame:TweenPosition(UDim2.new(0.344000012, 0, 0.0219999999, 0), "InOut", "Quart", 1, true)
+            wait(1)
+            wait(duration)
+            Frame:TweenPosition(UDim2.new(0.344000012, 0, -1.0219999999, 0), "InOut", "Quart", 1, true)
+        end)
+        
+        UICorner.CornerRadius = UDim.new(0, 25)
+        UICorner.Parent = Frame
+        
+        DropShadow.Name = "DropShadow"
+        DropShadow.Parent = Frame
+        DropShadow.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow.BorderSizePixel = 0
+        DropShadow.Position = UDim2.new(0.0031152647, 0, 0.00952380989, 0)
+        DropShadow.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_2.CornerRadius = UDim.new(0, 25)
+        UICorner_2.Parent = DropShadow
+        
+        DropShadow_2.Name = "DropShadow"
+        DropShadow_2.Parent = Frame
+        DropShadow_2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow_2.BorderSizePixel = 0
+        DropShadow_2.Position = UDim2.new(-0.0031152647, 0, -0.00952380989, 0)
+        DropShadow_2.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_3.CornerRadius = UDim.new(0, 25)
+        UICorner_3.Parent = DropShadow_2
+        
+        DropShadow_3.Name = "DropShadow"
+        DropShadow_3.Parent = Frame
+        DropShadow_3.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow_3.BorderSizePixel = 0
+        DropShadow_3.Position = UDim2.new(-0.0031152647, 0, 0.00952380989, 0)
+        DropShadow_3.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_4.CornerRadius = UDim.new(0, 25)
+        UICorner_4.Parent = DropShadow_3
+        
+        DropShadow_4.Name = "DropShadow"
+        DropShadow_4.Parent = Frame
+        DropShadow_4.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow_4.BorderSizePixel = 0
+        DropShadow_4.Position = UDim2.new(0.0031152647, 0, -0.00952380989, 0)
+        DropShadow_4.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_5.CornerRadius = UDim.new(0, 25)
+        UICorner_5.Parent = DropShadow_4
+        
+        title.Name = "title"
+        title.Parent = Frame
+        title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        title.BackgroundTransparency = 1.000
+        title.BorderSizePixel = 0
+        title.Position = UDim2.new(0, 0, 0.00952380989, 0)
+        title.Size = UDim2.new(0.996884763, 0, 0.323809534, 0)
+        title.ZIndex = 5
+        title.Font = Enum.Font.Arial
+        title.TextColor3 = Color3.fromRGB(255, 0, 0)
+        title.TextSize = 20.000
+        title.TextWrapped = true
+        title.Text = titlee
+        
+        Mesage.Name = "Mesage"
+        Mesage.Parent = Frame
+        Mesage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Mesage.BackgroundTransparency = 1.000
+        Mesage.BorderSizePixel = 0
+        Mesage.Position = UDim2.new(0, 0, 0.333333343, 0)
+        Mesage.Size = UDim2.new(0.996884763, 0, 0.657142878, 0)
+        Mesage.ZIndex = 5
+        Mesage.Font = Enum.Font.Arial
+        Mesage.Text = text
+        Mesage.TextColor3 = Color3.fromRGB(255, 0, 0)
+        Mesage.TextScaled = true
+        Mesage.TextSize = 20.000
+        Mesage.TextWrapped = true
+        
     end,
 
     Translate = function(num)
