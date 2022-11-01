@@ -66,42 +66,30 @@ getgenv().functions = {
     end,
     
     getNearestToMouse = function(teamcheck)
-        local nearest = 9e9
-        local target
-
-        for i,v in pairs(game.Players:GetChildren()) do
-
-            if v ~= game.Players.LocalPlayer then
-
-                pcall(function()
-            
-                    if ((teamcheck == true and v.TeamColor ~= game.Players.LocalPlayer.TeamColor) or teamcheck == false) then
-
-                        local vector, onscreen = workspace.CurrentCamera:worldToViewportPoint(v.Character.Head.Position)
-
-                        if onscreen then
-
-                            local mag = (game:GetService("UserInputService"):GetMouseLocation() - Vector3.new(vector.X, vector.Y)).Magnitude
-
-                            if mag < nearest then
-
-                                nearest = mag
-                                target = v
-
-                            end
-
-                        end
-
-                    end
-    
-                end)
-
-            end
-
-        end
-
+        local target = nil
+        local dist = math.huge
         
-
+        local mouse = game.Players.LocalPlayer:GetMouse()
+    
+        local camera = workspace.CurrentCamera
+    
+        for i,v in pairs(game.Players:GetChildren()) do
+            if v ~= game.Players.LocalPlayer and ((teamcheck == true and v.TeamColor ~= game.Players.LocalPlayer.TeamColor) or teamcheck == false) then
+                if v.Character ~= nil and
+                v.Character:FindFirstChild('Head') and
+                v.Character:FindFirstChild('Humanoid').Health > 0 then
+                    local vector, onscreen = camera:worldToViewportPoint(v.Character.Head.Position)
+                    
+                    local mag = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(vector.X, vector.Y)).Magnitude
+    
+                    if onscreen and mag < dist then
+                        dist = mag
+                        target = v
+                    end
+                end
+            end
+        end
+    
         return target
     end,
 
