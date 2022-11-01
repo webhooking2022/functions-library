@@ -1,3 +1,4 @@
+
 getgenv().functions = {
 
     getRoot = function(plr)
@@ -67,7 +68,7 @@ getgenv().functions = {
     
     getNearestToMouse = function(teamcheck)
         local target = nil
-        local dist = math.huge
+        local dist = 150
         
         local mouse = game.Players.LocalPlayer:GetMouse()
     
