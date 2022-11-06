@@ -258,5 +258,9 @@ getgenv().functions = {
         end
 
         return converttoletter(num)
-    end
+    end,
+    
+    KeyEvent = function(key, pressed)
+        game:GetService("VirtualInputManager"):SendKeyEvent(pressed, key, false, game)
+    end,
 }
