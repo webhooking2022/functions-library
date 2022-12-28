@@ -66,9 +66,9 @@ getgenv().functions = {
         return target 
     end,
     
-    getNearestToMouse = function(teamcheck)
+    getNearestToMouse = function(fov,teamcheck)
         local target = nil
-        local dist = 150
+        local dist = fov
         
         local mouse = game.Players.LocalPlayer:GetMouse()
     
