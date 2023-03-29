@@ -1,0 +1,267 @@
+local tab = {
+
+    getRoot = function(plr)
+        plr = plr or game.Players.LocalPlayer
+        local sucess, root = pcall(function()
+            return plr.Character.HumanoidRootPart or false
+        end)
+        return root
+    end,
+
+    getHumanoid = function(plr)
+        plr = plr or game.Players.LocalPlayer
+        local sucess, humanoid = pcall(function()
+            return plr.Character.Humanoid or false
+        end)
+        return humanoid
+    end,
+
+    getCharacter = function(plr)
+        plr = plr or game.Players.LocalPlayer
+        local sucess, char = pcall(function()
+            return plr.Character or false
+        end)
+        return char
+    end,
+
+    FindPlayer = function(playerName)
+        local target = false 
+
+        for i,v in pairs(game.Players:GetChildren()) do
+            if v.Name:lower():match(playerName:lower()) or v.DisplayName:lower():match(playerName:lower()) then
+                target = v
+            end
+        end
+
+        return target
+    end,
+
+    getNearest = function(teamcheck)
+        local nearest = 9e9
+        local target
+
+        for i,v in pairs(game.Players:GetChildren()) do
+
+            if game.Players.LocalPlayer ~= v then
+
+                pcall(function()
+            
+                    if ((teamcheck == true and v.TeamColor ~= game.Players.LocalPlayer.TeamColor) or teamcheck == false) then
+
+                        local mag = (v.Character.Head.Position - game.Players.LocalPlayer.Character.Head.Position).Magnitude
+
+                        if mag < nearest then
+                            nearest = mag
+                            target = v 
+                        end
+                    end
+    
+                end)
+
+            end
+
+        end
+
+        return target 
+    end,
+    
+    getNearestToMouse = function(fov,teamcheck)
+        local target = nil
+        local dist = fov
+        
+        local mouse = game.Players.LocalPlayer:GetMouse()
+    
+        local camera = workspace.CurrentCamera
+    
+        for i,v in pairs(game.Players:GetChildren()) do
+            if v ~= game.Players.LocalPlayer and ((teamcheck == true and v.TeamColor ~= game.Players.LocalPlayer.TeamColor) or teamcheck == false) then
+                if v.Character ~= nil and
+                v.Character:FindFirstChild('Head') and
+                v.Character:FindFirstChild('Humanoid').Health > 0 then
+                    local vector, onscreen = camera:worldToViewportPoint(v.Character.Head.Position)
+                    
+                    local mag = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(vector.X, vector.Y)).Magnitude
+    
+                    if onscreen and mag < dist then
+                        dist = mag
+                        target = v
+                    end
+                end
+            end
+        end
+    
+        return target
+    end,
+
+    sendWebHook = function(tab, webhook)
+        local req = (syn and syn.request) or request or http_request 
+
+        req(
+            {
+                Url = webhook;
+                Method = "POST";
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                };
+                Body = game:GetService("HttpService"):JSONEncode(tab)
+            }
+        )
+    end,
+
+    sendNotification = function(titlee, text, duration)
+
+
+        if game.CoreGui:FindFirstChild("Notification") then
+            for i,v in pairs(game.CoreGui:GetChildren()) do
+                if v.Name == "Notification" and v:FindFirstChild("Frame") then
+                    v.Frame:TweenPosition(UDim2.new(0.344000012, 0, -1.0219999999, 0), "InOut", "Quart", 1, true)
+                end
+            end
+        end
+        local Notification = Instance.new("ScreenGui")
+        local Frame = Instance.new("Frame")
+        local UICorner = Instance.new("UICorner")
+        local DropShadow = Instance.new("Frame")
+        local UICorner_2 = Instance.new("UICorner")
+        local DropShadow_2 = Instance.new("Frame")
+        local UICorner_3 = Instance.new("UICorner")
+        local DropShadow_3 = Instance.new("Frame")
+        local UICorner_4 = Instance.new("UICorner")
+        local DropShadow_4 = Instance.new("Frame")
+        local UICorner_5 = Instance.new("UICorner")
+        local title = Instance.new("TextLabel")
+        local Mesage = Instance.new("TextLabel")
+        
+        
+        Notification.Name = "Notification"
+        Notification.Parent = game.CoreGui
+        
+        Frame.Parent = Notification
+        Frame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+        Frame.BorderSizePixel = 0
+        Frame.Position = UDim2.new(0.344000012, 0, -1.0219999999, 0)
+        Frame.Size = UDim2.new(0.311650485, 0, 0.1640625, 0)
+        Frame.ZIndex = 5
+        
+        spawn(function()
+            Frame:TweenPosition(UDim2.new(0.344000012, 0, 0.0219999999, 0), "InOut", "Quart", 1, true)
+            wait(1)
+            wait(duration)
+            Frame:TweenPosition(UDim2.new(0.344000012, 0, -1.0219999999, 0), "InOut", "Quart", 1, true)
+        end)
+        
+        UICorner.CornerRadius = UDim.new(0, 25)
+        UICorner.Parent = Frame
+        
+        DropShadow.Name = "DropShadow"
+        DropShadow.Parent = Frame
+        DropShadow.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow.BorderSizePixel = 0
+        DropShadow.Position = UDim2.new(0.0031152647, 0, 0.00952380989, 0)
+        DropShadow.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_2.CornerRadius = UDim.new(0, 25)
+        UICorner_2.Parent = DropShadow
+        
+        DropShadow_2.Name = "DropShadow"
+        DropShadow_2.Parent = Frame
+        DropShadow_2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow_2.BorderSizePixel = 0
+        DropShadow_2.Position = UDim2.new(-0.0031152647, 0, -0.00952380989, 0)
+        DropShadow_2.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_3.CornerRadius = UDim.new(0, 25)
+        UICorner_3.Parent = DropShadow_2
+        
+        DropShadow_3.Name = "DropShadow"
+        DropShadow_3.Parent = Frame
+        DropShadow_3.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow_3.BorderSizePixel = 0
+        DropShadow_3.Position = UDim2.new(-0.0031152647, 0, 0.00952380989, 0)
+        DropShadow_3.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_4.CornerRadius = UDim.new(0, 25)
+        UICorner_4.Parent = DropShadow_3
+        
+        DropShadow_4.Name = "DropShadow"
+        DropShadow_4.Parent = Frame
+        DropShadow_4.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        DropShadow_4.BorderSizePixel = 0
+        DropShadow_4.Position = UDim2.new(0.0031152647, 0, -0.00952380989, 0)
+        DropShadow_4.Size = UDim2.new(1, 0, 1, 0)
+        
+        UICorner_5.CornerRadius = UDim.new(0, 25)
+        UICorner_5.Parent = DropShadow_4
+        
+        title.Name = "title"
+        title.Parent = Frame
+        title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        title.BackgroundTransparency = 1.000
+        title.BorderSizePixel = 0
+        title.Position = UDim2.new(0, 0, 0.00952380989, 0)
+        title.Size = UDim2.new(0.996884763, 0, 0.323809534, 0)
+        title.ZIndex = 5
+        title.Font = Enum.Font.Arial
+        title.TextColor3 = Color3.fromRGB(255, 0, 0)
+        title.TextSize = 20.000
+        title.TextWrapped = true
+        title.Text = titlee
+        
+        Mesage.Name = "Mesage"
+        Mesage.Parent = Frame
+        Mesage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Mesage.BackgroundTransparency = 1.000
+        Mesage.BorderSizePixel = 0
+        Mesage.Position = UDim2.new(0, 0, 0.333333343, 0)
+        Mesage.Size = UDim2.new(0.996884763, 0, 0.657142878, 0)
+        Mesage.ZIndex = 5
+        Mesage.Font = Enum.Font.Arial
+        Mesage.Text = text
+        Mesage.TextColor3 = Color3.fromRGB(255, 0, 0)
+        Mesage.TextScaled = true
+        Mesage.TextSize = 20.000
+        Mesage.TextWrapped = true
+        
+    end,
+
+    Translate = function(num)
+        function round(num, numDecimalPlaces)
+            local mult = 10^(numDecimalPlaces or 0)
+            return math.floor(num * mult + 0.5) / mult
+        end
+                
+        function converttoletter(num)
+            if num / 1e21 >=1 then
+                newnum = num / 1e21
+                return round(newnum, 6).. "Sx"
+            elseif num / 1e18 >=1 then
+                newnum = num / 1e18
+                return round(newnum, 6).. "Qi"
+            elseif num / 1e15 >=1 then
+                newnum = num / 1e15
+                return round(newnum, 6).. "Qa"
+            elseif num / 1e12 >=1 then
+                newnum = num / 1e12
+                return round(newnum, 6).. "T"
+            elseif num / 1e09 >=1 then
+                newnum = num / 1e09
+                return round(newnum, 6).. "B"
+            elseif num / 1e06 >=1 then
+                newnum = num / 1e06
+                return round(newnum, 6).. "M"
+            elseif num / 1e03 >=1 then
+                newnum = num / 1e03
+                return round(newnum, 6).. "K"
+            else return num
+            end
+        end
+
+        return converttoletter(num)
+    end,
+    
+    KeyEvent = function(key, pressed)
+        game:GetService("VirtualInputManager"):SendKeyEvent(pressed, key, false, game)
+    end,
+}
+
+return tab
